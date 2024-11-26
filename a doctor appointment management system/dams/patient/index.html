@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patient Login</title>
+    <link href="../patient/css/patient_styles.css" rel="stylesheet">
+  
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-box">
+            <div class="left">
+                <img src="../patient/img/sam.png" alt="Login Image">
+            </div>
+            <div class="right">
+                <h2>Patient Login</h2>
+                <form action="login.php" method="post" onsubmit="rememberMe()">
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email"required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-container">
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <img src="../patient/img/eye-close.png" id="eyeicon" alt="Toggle Password Visibility">
+                        </div>
+                    </div>
+                    
+                    <div class="form-options">
+                        <div>
+                            <!-- <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label> -->
+                        </div>
+                        <a href="forgot_password.php">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn-login">Login</button>
+                </form>
+                <p>Don't have an account? <a href="register.html">Register here</a></p>
+                <a href="../../index.php" class="back-link">Back</a>
+            </div>
+        </div>
+    </div>
+    <script src="./js/loginpatient.js"></script>
+</body>
+
+</html>
