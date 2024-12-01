@@ -1,16 +1,16 @@
 <?php
 include_once('../includes/db.php');
 
-// Function to clear Saturday availability automatically on Sundays
-function resetSaturdayAvailabilityIfSunday($mysqli) {
-    $today = date('w'); // 'w' gives the day of the week (0 = Sunday)
-    if ($today == 0) { // If today is Sunday
-        $query = "DELETE FROM doctor_availability WHERE day = 'Saturday'";
-        $mysqli->query($query);
-    }
+// Function to clear availability for all doctors on a selected day
+function resetAllAvailabilityForDay($selectedDay, $mysqli) {
+    $query = "DELETE FROM doctor_availability WHERE day = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("s", $selectedDay);
+    $stmt->execute();
+    $stmt->close();
 }
 
-// Function to fetch current availability for a doctor
+// Function to fetch current availability for a specific doctor
 function fetchCurrentAvailability($doctorId, $mysqli) {
     $currentAvailability = [];
     $query = "SELECT day FROM doctor_availability WHERE doctorId = ?";
@@ -33,43 +33,44 @@ function fetchAllDoctors($mysqli) {
 
 // Function to update availability for a doctor
 function updateDoctorAvailability($doctorId, $availability, $mysqli) {
-    // Remove previous availability except for Saturday
-    $stmt = $mysqli->prepare("DELETE FROM doctor_availability WHERE doctorId = ? AND day != 'Saturday'");
+    $stmt = $mysqli->prepare("DELETE FROM doctor_availability WHERE doctorId = ?");
     $stmt->bind_param("i", $doctorId);
     $stmt->execute();
     $stmt->close();
 
-    // Validate and insert new availability
-    if (count($availability) >= 1 && count($availability) <= 4) {
-        $stmt = $mysqli->prepare("INSERT INTO doctor_availability (doctorId, day) VALUES (?, ?)");
-        foreach ($availability as $day) {
-            if ($day !== 'Saturday') { // Ensure Saturday is handled separately
-                $stmt->bind_param("is", $doctorId, $day);
-                $stmt->execute();
-            }
-        }
-        $stmt->close();
-        return "Availability updated successfully! Saturdays must be reassigned weekly.";
-    } else {
-        return "You must assign between 1 to 4 days (excluding Saturday).";
+    $stmt = $mysqli->prepare("INSERT INTO doctor_availability (doctorId, day) VALUES (?, ?)");
+    foreach ($availability as $day) {
+        $stmt->bind_param("is", $doctorId, $day);
+        $stmt->execute();
     }
+    $stmt->close();
+    return "Availability updated successfully!";
 }
 
-resetSaturdayAvailabilityIfSunday($mysqli);
-
+// Fetch all doctors for the dropdown
 $doctorsResult = fetchAllDoctors($mysqli);
 $currentAvailability = [];
 $message = "";
 
+// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $doctorId = intval($_POST['doctor']);
-    $availability = isset($_POST['availability']) ? $_POST['availability'] : [];
-
-    if (isset($_POST['set_availability'])) {
-        $message = updateDoctorAvailability($doctorId, $availability, $mysqli);
+    if (isset($_POST['reset_schedule'])) {
+        $selectedDay = $_POST['day'];
+        resetAllAvailabilityForDay($selectedDay, $mysqli);
+        $message = "{$selectedDay} schedule reset successfully for all doctors!";
     }
 
-    $currentAvailability = fetchCurrentAvailability($doctorId, $mysqli);
+    if (isset($_POST['set_availability'])) {
+        $doctorId = intval($_POST['doctor']);
+        $availability = isset($_POST['availability']) ? $_POST['availability'] : [];
+        $message = updateDoctorAvailability($doctorId, $availability, $mysqli);
+        $currentAvailability = fetchCurrentAvailability($doctorId, $mysqli);
+    }
+
+    if (isset($_POST['doctor'])) {
+        $doctorId = intval($_POST['doctor']);
+        $currentAvailability = fetchCurrentAvailability($doctorId, $mysqli);
+    }
 }
 ?>
 
@@ -93,6 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 });
             });
+
+            document.getElementById('doctor').addEventListener('change', function () {
+                this.form.submit();
+            });
         });
     </script>
 </head>
@@ -107,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Doctor selection form -->
     <form action="" method="POST">
         <label for="doctor">Select Doctor:</label>
-        <select name="doctor" id="doctor" required onchange="this.form.submit()">
+        <select name="doctor" id="doctor" required>
             <option value="">-- Select Doctor --</option>
             <?php while ($row = $doctorsResult->fetch_assoc()): ?>
                 <option value="<?php echo $row['id']; ?>" <?php echo (isset($doctorId) && $doctorId == $row['id']) ? 'selected' : ''; ?>>
@@ -121,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (isset($doctorId)): ?>
         <form action="" method="POST">
             <input type="hidden" name="doctor" value="<?php echo $doctorId; ?>">
-            <h2>Assign Availability for Doctor: <?php echo htmlspecialchars($doctorId); ?></h2>
+            <h2>Assign Availability for Doctor ID: <?php echo htmlspecialchars($doctorId); ?></h2>
             <p>Select available days (minimum 1, maximum 4):</p>
 
             <?php
@@ -135,11 +140,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </label><br>
             <?php endforeach; ?>
 
-            <br>
             <p><strong>Note:</strong> Working hours are fixed from 11:00 AM to 4:00 PM.</p>
             <button type="submit" name="set_availability">Set Availability</button>
         </form>
     <?php endif; ?>
+
+    <!-- Reset schedule for a specific day -->
+    <form action="" method="POST">
+        <label for="day">Reset Schedule for Day:</label>
+        <select name="day" id="day" required>
+            <?php foreach ($days as $day): ?>
+                <option value="<?php echo $day; ?>"><?php echo $day; ?></option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit" name="reset_schedule">Reset Schedule</button>
+    </form>
 
     <a href="dashboard.php">Back to Dashboard</a>
 </body>

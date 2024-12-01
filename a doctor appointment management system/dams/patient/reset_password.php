@@ -1,60 +1,52 @@
 <?php
+// Include database connection
 include('../includes/db.php');
+// Get token from the URL
+if (isset($_GET['token'])) {
+    $token = $_GET['token'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $token = $_POST['token'];
-    $new_password = trim($_POST['new_password']);
-    $confirm_password = trim($_POST['confirm_password']);
+    // Check if the token exists in the database
+    $result = $mysqli->query("SELECT * FROM patients WHERE reset_token = '$token'"); // Use the 'patients' table
 
-    if (!empty($new_password) && !empty($confirm_password) && $new_password === $confirm_password) {
-        $query = "SELECT email FROM password_resets WHERE token = ? AND expiry > NOW()";
-        if ($stmt = $mysqli->prepare($query)) {
-            $stmt->bind_param("s", $token);
-            $stmt->execute();
-            $stmt->store_result();
+    if ($result->num_rows > 0) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Get the new password and update it in the database
+            $new_password = $_POST['new_password'];
+            $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);  // Hash the password for storage
+            $mysqli->query("UPDATE patients SET password = '$hashed_password', reset_token = NULL WHERE reset_token = '$token'"); // Update 'patients' table
 
-            if ($stmt->num_rows > 0) {
-                $stmt->bind_result($email);
-                $stmt->fetch();
-
-                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-                $updateQuery = "UPDATE patients SET password = ? WHERE email = ?";
-                if ($updateStmt = $mysqli->prepare($updateQuery)) {
-                    $updateStmt->bind_param("ss", $hashed_password, $email);
-                    $updateStmt->execute();
-
-                    $deleteQuery = "DELETE FROM password_resets WHERE email = ?";
-                    if ($deleteStmt = $mysqli->prepare($deleteQuery)) {
-                        $deleteStmt->bind_param("s", $email);
-                        $deleteStmt->execute();
-                    }
-
-                    $success = "Password updated successfully.";
-                }
-            } else {
-                $error = "Invalid or expired token.";
-            }
+            echo "Your password has been successfully reset!";
         }
     } else {
-        $error = "Passwords do not match.";
+        echo "Invalid token or token has expired.";
     }
+} else {
+    echo "No token provided.";
 }
-?>
 
-<!DOCTYPE html>
+?>
+<!doctype html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reset Password</title>
+    <link href="../patient/css/patient_styles.css" rel="stylesheet">
 </head>
 <body>
-    <form action="reset_password.php" method="post">
-        <h2>Reset Password</h2>
-        <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
-        <input type="password" name="new_password" placeholder="New Password" required>
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-        <button type="submit">Reset Password</button>
-        <?php if (isset($error)) echo "<p>$error</p>"; ?>
-        <?php if (isset($success)) echo "<p>$success</p>"; ?>
-    </form>
+    <div class="container">
+        <div class="login-box">
+            <div class="right">
+                <h2>Reset Your Password</h2>
+                <form action="reset_password.php?token=<?php echo $_GET['token']; ?>" method="post">
+                    <div class="form-group">
+                        <label for="new_password">New Password</label>
+                        <input type="password" id="new_password" name="new_password" placeholder="Enter new password" required>
+                    </div>
+                    <button type="submit" class="btn-login">Reset Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

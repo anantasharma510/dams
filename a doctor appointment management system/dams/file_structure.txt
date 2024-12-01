@@ -1,0 +1,440 @@
+Folder PATH listing for volume New Volume
+Volume serial number is 50C7-D15E
+D:.
+¦   composer.json
+¦   composer.lock
+¦   file_structure.txt
+¦   
++---a doctor appointment management system
+¦   ¦   contact.php
+¦   ¦   createstructure.bat
+¦   ¦   da.png
+¦   ¦   index.php
+¦   ¦   sam.png
+¦   ¦   
+¦   +---assets
+¦   ¦   +---css
+¦   ¦   ¦       bg.png
+¦   ¦   ¦       styles.css
+¦   ¦   ¦       
+¦   ¦   +---images
+¦   ¦   ¦       admin.png
+¦   ¦   ¦       doctor.png
+¦   ¦   ¦       patient.png
+¦   ¦   ¦       slider1.ai
+¦   ¦   ¦       slider1.jpeg
+¦   ¦   ¦       slider1.png
+¦   ¦   ¦       slider2.jpeg
+¦   ¦   ¦       slider2.png
+¦   ¦   ¦       slider3.jpeg
+¦   ¦   ¦       slider3.png
+¦   ¦   ¦       
+¦   ¦   +---js
+¦   ¦           .txt
+¦   ¦           script.js
+¦   ¦           
+¦   +---dams
+¦       +---admin
+¦       ¦   ¦   .txt
+¦       ¦   ¦   add_doctors.php
+¦       ¦   ¦   add_patient.php
+¦       ¦   ¦   admin_appointments.php
+¦       ¦   ¦   appointment_history.php
+¦       ¦   ¦   approve_appointment.php
+¦       ¦   ¦   available_dates.php
+¦       ¦   ¦   contact_queries.php
+¦       ¦   ¦   dashboard.php
+¦       ¦   ¦   delete_patient.php
+¦       ¦   ¦   delete_specialization.php
+¦       ¦   ¦   doctor_logs.php
+¦       ¦   ¦   edit_managedoc.php
+¦       ¦   ¦   edit_specialization.php
+¦       ¦   ¦   forgetpassword.php
+¦       ¦   ¦   generate_password.php
+¦       ¦   ¦   index.php
+¦       ¦   ¦   logout.php
+¦       ¦   ¦   manage_doctors.php
+¦       ¦   ¦   manage_patients.php
+¦       ¦   ¦   manage_users.php
+¦       ¦   ¦   p.php
+¦       ¦   ¦   profile.php
+¦       ¦   ¦   reports.php
+¦       ¦   ¦   reset_availability.php
+¦       ¦   ¦   reset_password.php
+¦       ¦   ¦   reset_saturday.php
+¦       ¦   ¦   schedule_doctor.php
+¦       ¦   ¦   search.php
+¦       ¦   ¦   search_patient.php
+¦       ¦   ¦   sendsreset_link.php
+¦       ¦   ¦   set_weekly_availability.php
+¦       ¦   ¦   specialisations.php
+¦       ¦   ¦   test.php
+¦       ¦   ¦   update_password.php
+¦       ¦   ¦   user_logs.php
+¦       ¦   ¦   view_doctor_availability.php
+¦       ¦   ¦   view_record.php
+¦       ¦   ¦   
+¦       ¦   +---css
+¦       ¦   ¦       icons.css
+¦       ¦   ¦       lstyles.css
+¦       ¦   ¦       styles.css
+¦       ¦   ¦       
+¦       ¦   +---js
+¦       ¦           adminscript.js
+¦       ¦           
+¦       +---doctor
+¦       ¦   ¦   add_patient.php
+¦       ¦   ¦   appointment_history.php
+¦       ¦   ¦   change_password.php
+¦       ¦   ¦   change_profile.php
+¦       ¦   ¦   check_availibilty.php
+¦       ¦   ¦   confirm_visit.php
+¦       ¦   ¦   dashboard.php
+¦       ¦   ¦   doctor_dashboard.php
+¦       ¦   ¦   edit_patient.php
+¦       ¦   ¦   get_report.php
+¦       ¦   ¦   index.php
+¦       ¦   ¦   logout.php
+¦       ¦   ¦   manage_patient.php
+¦       ¦   ¦   patient_search.php
+¦       ¦   ¦   search_patient.php
+¦       ¦   ¦   set_availabilty.php
+¦       ¦   ¦   submit_report.php
+¦       ¦   ¦   update_profile.php
+¦       ¦   ¦   update_report.php
+¦       ¦   ¦   view_availabilty.php
+¦       ¦   ¦   view_patient.php
+¦       ¦   ¦   view_reports.php
+¦       ¦   ¦   
+¦       ¦   +---css
+¦       ¦   ¦       doctor_styles.css
+¦       ¦   ¦       dstyle.css
+¦       ¦   ¦       
+¦       ¦   +---js
+¦       ¦           doctor_scripts.js
+¦       ¦           
+¦       +---includes
+¦       ¦       db.php
+¦       ¦       footer.php
+¦       ¦       functions.php
+¦       ¦       header.php
+¦       ¦       
+¦       +---patient
+¦           ¦   appointment_form.php
+¦           ¦   appointment_history.php
+¦           ¦   approve_appointment.php
+¦           ¦   book_appointment.php
+¦           ¦   change_password.php
+¦           ¦   check_availibilty.php
+¦           ¦   check_timeavailability.php
+¦           ¦   dashboard.php
+¦           ¦   download_report.php
+¦           ¦   download_ticket.php
+¦           ¦   fetch_availability.php
+¦           ¦   fetch_available_dates.php
+¦           ¦   fetch_doctors.php
+¦           ¦   fetch_doctor_fee.php
+¦           ¦   forgot_password.php
+¦           ¦   index.html
+¦           ¦   login.php
+¦           ¦   logout.php
+¦           ¦   medical_history.php
+¦           ¦   my_appointments.php
+¦           ¦   patient_view_appointments.php
+¦           ¦   register.html
+¦           ¦   register.php
+¦           ¦   reset.php
+¦           ¦   reset_password.php
+¦           ¦   test_mail.php
+¦           ¦   update_profile.php
+¦           ¦   view_available_slots.php
+¦           ¦   
+¦           +---css
+¦           ¦       dstyle.css
+¦           ¦       patient_styles.css
+¦           ¦       style.css
+¦           ¦       
+¦           +---img
+¦           ¦       eye-close.png
+¦           ¦       eye-open.png
+¦           ¦       login-image.png
+¦           ¦       sam.png
+¦           ¦       
+¦           +---js
+¦                   dscript.js
+¦                   loginpatient.js
+¦                   patient_scripts.js
+¦                   
++---dams
+¦       admin.frm
+¦       admin.ibd
+¦       admin_login_history.frm
+¦       admin_login_history.ibd
+¦       appointment.frm
+¦       appointment.ibd
+¦       db.opt
+¦       doctors.frm
+¦       doctors.ibd
+¦       doctorspecilization.frm
+¦       doctorspecilization.ibd
+¦       doctors_schedule.frm
+¦       doctors_schedule.ibd
+¦       doctor_availability.frm
+¦       doctor_availability.ibd
+¦       doctor_login_history.frm
+¦       doctor_login_history.ibd
+¦       doctor_slots.frm
+¦       doctor_slots.ibd
+¦       patients.frm
+¦       patients.ibd
+¦       reports.frm
+¦       reports.ibd
+¦       tblcontact.frm
+¦       tblcontact.ibd
+¦       tblpatient.frm
+¦       tblpatient.ibd
+¦       
++---vendor
+    ¦   autoload.php
+    ¦   
+    +---composer
+    ¦       autoload_classmap.php
+    ¦       autoload_namespaces.php
+    ¦       autoload_psr4.php
+    ¦       autoload_real.php
+    ¦       autoload_static.php
+    ¦       ClassLoader.php
+    ¦       installed.json
+    ¦       installed.php
+    ¦       InstalledVersions.php
+    ¦       LICENSE
+    ¦       platform_check.php
+    ¦       
+    +---phpmailer
+        +---phpmailer
+            ¦   .codecov.yml
+            ¦   .editorconfig
+            ¦   .gitattributes
+            ¦   .gitignore
+            ¦   changelog.md
+            ¦   COMMITMENT
+            ¦   composer.json
+            ¦   get_oauth_token.php
+            ¦   LICENSE
+            ¦   phpcs.xml.dist
+            ¦   phpdoc.dist.xml
+            ¦   phpunit.xml.dist
+            ¦   README.md
+            ¦   SECURITY.md
+            ¦   UPGRADING.md
+            ¦   VERSION
+            ¦   
+            +---.github
+            ¦   ¦   dependabot.yml
+            ¦   ¦   FUNDING.yml
+            ¦   ¦   
+            ¦   +---actions
+            ¦   ¦   +---build-docs
+            ¦   ¦           Dockerfile
+            ¦   ¦           entrypoint.sh
+            ¦   ¦           
+            ¦   +---ISSUE_TEMPLATE
+            ¦   ¦       bug_report.md
+            ¦   ¦       
+            ¦   +---workflows
+            ¦           docs.yaml
+            ¦           scorecards.yml
+            ¦           tests.yml
+            ¦           
+            +---.phan
+            ¦       config.php
+            ¦       
+            +---docs
+            ¦       README.md
+            ¦       
+            +---examples
+            ¦   ¦   azure_xoauth2.phps
+            ¦   ¦   callback.phps
+            ¦   ¦   contactform-ajax.phps
+            ¦   ¦   contactform.phps
+            ¦   ¦   contents.html
+            ¦   ¦   contentsutf8.html
+            ¦   ¦   DKIM_gen_keys.phps
+            ¦   ¦   DKIM_sign.phps
+            ¦   ¦   exceptions.phps
+            ¦   ¦   extending.phps
+            ¦   ¦   gmail.phps
+            ¦   ¦   gmail_xoauth.phps
+            ¦   ¦   mail.phps
+            ¦   ¦   mailing_list.phps
+            ¦   ¦   pop_before_smtp.phps
+            ¦   ¦   README.md
+            ¦   ¦   sendmail.phps
+            ¦   ¦   sendoauth2.phps
+            ¦   ¦   send_file_upload.phps
+            ¦   ¦   send_multiple_file_upload.phps
+            ¦   ¦   simple_contact_form.phps
+            ¦   ¦   smime_signed_mail.phps
+            ¦   ¦   smtp.phps
+            ¦   ¦   smtp_check.phps
+            ¦   ¦   smtp_low_memory.phps
+            ¦   ¦   smtp_no_auth.phps
+            ¦   ¦   ssl_options.phps
+            ¦   ¦   
+            ¦   +---images
+            ¦           PHPMailer card logo.afdesign
+            ¦           PHPMailer card logo.png
+            ¦           PHPMailer card logo.svg
+            ¦           phpmailer.png
+            ¦           phpmailer_mini.png
+            ¦           
+            +---language
+            ¦       phpmailer.lang-af.php
+            ¦       phpmailer.lang-ar.php
+            ¦       phpmailer.lang-as.php
+            ¦       phpmailer.lang-az.php
+            ¦       phpmailer.lang-ba.php
+            ¦       phpmailer.lang-be.php
+            ¦       phpmailer.lang-bg.php
+            ¦       phpmailer.lang-bn.php
+            ¦       phpmailer.lang-ca.php
+            ¦       phpmailer.lang-cs.php
+            ¦       phpmailer.lang-da.php
+            ¦       phpmailer.lang-de.php
+            ¦       phpmailer.lang-el.php
+            ¦       phpmailer.lang-eo.php
+            ¦       phpmailer.lang-es.php
+            ¦       phpmailer.lang-et.php
+            ¦       phpmailer.lang-fa.php
+            ¦       phpmailer.lang-fi.php
+            ¦       phpmailer.lang-fo.php
+            ¦       phpmailer.lang-fr.php
+            ¦       phpmailer.lang-gl.php
+            ¦       phpmailer.lang-he.php
+            ¦       phpmailer.lang-hi.php
+            ¦       phpmailer.lang-hr.php
+            ¦       phpmailer.lang-hu.php
+            ¦       phpmailer.lang-hy.php
+            ¦       phpmailer.lang-id.php
+            ¦       phpmailer.lang-it.php
+            ¦       phpmailer.lang-ja.php
+            ¦       phpmailer.lang-ka.php
+            ¦       phpmailer.lang-ko.php
+            ¦       phpmailer.lang-ku.php
+            ¦       phpmailer.lang-lt.php
+            ¦       phpmailer.lang-lv.php
+            ¦       phpmailer.lang-mg.php
+            ¦       phpmailer.lang-mn.php
+            ¦       phpmailer.lang-ms.php
+            ¦       phpmailer.lang-nb.php
+            ¦       phpmailer.lang-nl.php
+            ¦       phpmailer.lang-pl.php
+            ¦       phpmailer.lang-pt.php
+            ¦       phpmailer.lang-pt_br.php
+            ¦       phpmailer.lang-ro.php
+            ¦       phpmailer.lang-ru.php
+            ¦       phpmailer.lang-si.php
+            ¦       phpmailer.lang-sk.php
+            ¦       phpmailer.lang-sl.php
+            ¦       phpmailer.lang-sr.php
+            ¦       phpmailer.lang-sr_latn.php
+            ¦       phpmailer.lang-sv.php
+            ¦       phpmailer.lang-tl.php
+            ¦       phpmailer.lang-tr.php
+            ¦       phpmailer.lang-uk.php
+            ¦       phpmailer.lang-ur.php
+            ¦       phpmailer.lang-vi.php
+            ¦       phpmailer.lang-zh.php
+            ¦       phpmailer.lang-zh_cn.php
+            ¦       
+            +---src
+            ¦       DSNConfigurator.php
+            ¦       Exception.php
+            ¦       OAuth.php
+            ¦       OAuthTokenProvider.php
+            ¦       PHPMailer.php
+            ¦       POP3.php
+            ¦       SMTP.php
+            ¦       
+            +---test
+                ¦   DebugLogTestListener.php
+                ¦   fakepopserver.sh
+                ¦   fakesendmail.sh
+                ¦   PreSendTestCase.php
+                ¦   runfakepopserver.sh
+                ¦   SendTestCase.php
+                ¦   testbootstrap-dist.php
+                ¦   TestCase.php
+                ¦   validators.php
+                ¦   
+                +---Fixtures
+                ¦   +---FileIsAccessibleTest
+                ¦   ¦       accessible.txt
+                ¦   ¦       inaccessible.txt
+                ¦   ¦       
+                ¦   +---LocalizationTest
+                ¦           phpmailer.lang-fr.php
+                ¦           phpmailer.lang-nl.php
+                ¦           phpmailer.lang-xa_scri_cc.php
+                ¦           phpmailer.lang-xb_scri.php
+                ¦           phpmailer.lang-xc_cc.php
+                ¦           phpmailer.lang-xd_cc.php
+                ¦           phpmailer.lang-xd_scri.php
+                ¦           phpmailer.lang-xe.php
+                ¦           phpmailer.lang-xx.php
+                ¦           phpmailer.lang-yy.php
+                ¦           phpmailer.lang-zz.php
+                ¦           
+                +---Language
+                ¦       TranslationCompletenessTest.php
+                ¦       
+                +---OAuth
+                ¦       OAuthTest.php
+                ¦       
+                +---PHPMailer
+                ¦       AddEmbeddedImageTest.php
+                ¦       AddrFormatTest.php
+                ¦       AddStringAttachmentTest.php
+                ¦       AddStringEmbeddedImageTest.php
+                ¦       AuthCRAMMD5Test.php
+                ¦       CustomHeaderTest.php
+                ¦       DKIMTest.php
+                ¦       DKIMWithoutExceptionsTest.php
+                ¦       DSNConfiguratorTest.php
+                ¦       EncodeQTest.php
+                ¦       EncodeStringTest.php
+                ¦       FileIsAccessibleTest.php
+                ¦       FilenameToTypeTest.php
+                ¦       GenerateIdTest.php
+                ¦       GetLastMessageIDTest.php
+                ¦       HasLineLongerThanMaxTest.php
+                ¦       Html2TextTest.php
+                ¦       ICalTest.php
+                ¦       IsPermittedPathTest.php
+                ¦       IsValidHostTest.php
+                ¦       LocalizationTest.php
+                ¦       MailTransportTest.php
+                ¦       MbPathinfoTest.php
+                ¦       MimeTypesTest.php
+                ¦       NormalizeBreaksTest.php
+                ¦       ParseAddressesTest.php
+                ¦       PHPMailerTest.php
+                ¦       PunyencodeAddressTest.php
+                ¦       QuotedStringTest.php
+                ¦       ReplyToGetSetClearTest.php
+                ¦       SetErrorTest.php
+                ¦       SetFromTest.php
+                ¦       SetTest.php
+                ¦       SetWordWrapTest.php
+                ¦       Utf8CharBoundaryTest.php
+                ¦       ValidateAddressCustomValidatorTest.php
+                ¦       ValidateAddressTest.php
+                ¦       WrapTextTest.php
+                ¦       XMailerTest.php
+                ¦       
+                +---POP3
+                ¦       PopBeforeSmtpTest.php
+                ¦       
+                +---Security
+                        DenialOfServiceVectorsTest.php
+                        
