@@ -1,62 +1,58 @@
 <?php
-// Include the database connection file
-include('../includes/db.php');
+session_start();
 
-// Check if $mysqli is set
-if (!$mysqli) {
-    die("Database connection not established.");
-}
+// Include database connection
+include('../includes/db.php'); // Adjust the path if necessary
 
-// Initialize variables for form data
-$email = $password = "";
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Get the submitted form data
+    $patientEmail = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-// Form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate email
-    if (empty(trim($_POST["email"]))) {
-        echo "Email is required.";
-    } else {
-        $email = trim($_POST["email"]);
-    }
+    // Query to select the patient record from the database
+    $query = "SELECT id, password FROM patients WHERE email = ?";
+    if ($stmt = $mysqli->prepare($query)) {
+        $stmt->bind_param('s', $patientEmail);  // 's' stands for string (email)
+        $stmt->execute();
+        $stmt->store_result();
 
-    // Validate password
-    if (empty(trim($_POST["password"]))) {
-        echo "Password is required.";
-    } else {
-        $password = trim($_POST["password"]);
-    }
+        // Check if patient exists
+        if ($stmt->num_rows == 1) {
+            $stmt->bind_result($id, $password_hash);
+            $stmt->fetch();
 
-    // If no errors, proceed to check the login credentials
-    if (!empty($email) && !empty($password)) {
-        $query = "SELECT id, password FROM patients WHERE email = ?";
-        if ($stmt = $mysqli->prepare($query)) {
-            $stmt->bind_param("s", $email);
-            if ($stmt->execute()) {
-                $stmt->store_result();
-                if ($stmt->num_rows > 0) {
-                    $stmt->bind_result($id, $hashed_password);
-                    if ($stmt->fetch()) {
-                        // Verify password
-                        if (password_verify($password, $hashed_password)) {
-                            // Start session and set user details
-                            session_start();
-                            $_SESSION['user_id'] = $id;
-                            $_SESSION['loggedin'] = true;
-                            header("location: dashboard.php"); // Redirect to a logged-in page
-                            exit();
-                        } else {
-                            echo "Invalid password.";
-                        }
-                    }
-                } else {
-                    echo "No account found with that email.";
+            // Verify the password using password_verify() for better security
+            if (password_verify($password, $password_hash)) {
+                // Successful login, set session variables
+                $_SESSION['patient_logged_in'] = true;
+                $_SESSION['patient_id'] = $id;
+                $_SESSION['patient_email'] = $patientEmail;
+
+                // Record the login time in login history
+                $login_query = "INSERT INTO patient_login_history (patient_id) VALUES (?)";
+                if ($login_stmt = $mysqli->prepare($login_query)) {
+                    $login_stmt->bind_param('i', $id);  // 'i' stands for integer (patient ID)
+                    $login_stmt->execute();
+                    $login_stmt->close();
                 }
+
+                // Redirect to patient dashboard or any protected page
+                header('Location:dashboard.php'); // Adjust to your dashboard page
+                exit();
             } else {
-                echo "Something went wrong. Please try again later.";
+                // Invalid password
+                $error = "Invalid email or password.";
             }
-            $stmt->close();
+        } else {
+            // Patient not found
+            $error = "Invalid email or password.";
         }
+
+        $stmt->close();
+    } else {
+        // Database query error
+        $error = "Error in database query.";
     }
-    $mysqli->close();
 }
 ?>

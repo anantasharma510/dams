@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Patient Login</title>
     <link href="../patient/css/patient_styles.css" rel="stylesheet">
-  
 </head>
 
 <body>
@@ -17,25 +16,21 @@
             </div>
             <div class="right">
                 <h2>Patient Login</h2>
-                <form action="login.php" method="post" onsubmit="rememberMe()">
-                    
+                <form action="login.php" method="post">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Enter your email"required>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <div class="password-container">
                             <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                            <img src="../patient/img/eye-close.png" id="eyeicon" alt="Toggle Password Visibility">
+                            <button type="button" id="togglePassword" aria-label="Toggle Password Visibility">
+                                <img src="../patient/img/eye-close.png" id="eyeicon" alt="Toggle Password">
+                            </button>
                         </div>
                     </div>
-                    
                     <div class="form-options">
-                        <div>
-                            <!-- <input type="checkbox" id="remember" name="remember">
-                            <label for="remember">Remember me</label> -->
-                        </div>
                         <a href="forgot_password.php">Forgot password?</a>
                     </div>
                     <button type="submit" class="btn-login">Login</button>
@@ -45,7 +40,20 @@
             </div>
         </div>
     </div>
-    <script src="./js/loginpatient.js"></script>
+    <script>
+        // JavaScript to toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeicon');
+
+        togglePassword.addEventListener('click', () => {
+            const isPasswordVisible = passwordField.getAttribute('type') === 'text';
+            passwordField.setAttribute('type', isPasswordVisible ? 'password' : 'text');
+            eyeIcon.src = isPasswordVisible
+                ? '../patient/img/eye-close.png'
+                : '../patient/img/eye-open.png';
+        });
+    </script>
 </body>
 
 </html>

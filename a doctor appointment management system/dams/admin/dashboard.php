@@ -13,49 +13,49 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 $total_users = 0;
 
 // Query to count the number of users
-$sql = "SELECT COUNT(*) as total_users FROM patients";
-$result = $mysqli->query($sql);
+// $sql = "SELECT COUNT(*) as total_users FROM patients";
+// $result = $mysqli->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $total_users = $row['total_users'];
-}
-$sql = "SELECT COUNT(*) as total_doctors FROM doctors";
-$result = $mysqli->query($sql);
+// if ($result && $result->num_rows > 0) {
+//     $row = $result->fetch_assoc();
+//     $total_users = $row['total_users'];
+// }
+// $sql = "SELECT COUNT(*) as total_doctors FROM doctors";
+// $result = $mysqli->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $total_doctors = $row['total_doctors'];
-}
-$sql = "SELECT COUNT(*) as total_appointments FROM appointment";
-$result = $mysqli->query($sql);
+// if ($result && $result->num_rows > 0) {
+//     $row = $result->fetch_assoc();
+//     $total_doctors = $row['total_doctors'];
+// }
+// $sql = "SELECT COUNT(*) as total_appointments FROM appointment";
+// $result = $mysqli->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $total_appointments = $row['total_appointments'];
-}
-$sql = "SELECT COUNT(*) as total_patients FROM tblpatient";
-$result = $mysqli->query($sql);
+// if ($result && $result->num_rows > 0) {
+//     $row = $result->fetch_assoc();
+//     $total_appointments = $row['total_appointments'];
+// }
+// $sql = "SELECT COUNT(*) as total_patients FROM tblpatient";
+// $result = $mysqli->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $total_patients = $row['total_patients'];
-}
+// if ($result && $result->num_rows > 0) {
+//     $row = $result->fetch_assoc();
+//     $total_patients = $row['total_patients'];
+// }
 
-$sql = "SELECT COUNT(*) as total_contacts FROM tblcontact";
-$result = $mysqli->query($sql);
+// $sql = "SELECT COUNT(*) as total_contacts FROM tblcontact";
+// $result = $mysqli->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $total_contacts = $row['total_contacts'];
-}
-$sql = "SELECT COUNT(*) as total_reports FROM reports";
-$result = $mysqli->query($sql);
+// if ($result && $result->num_rows > 0) {
+//     $row = $result->fetch_assoc();
+//     $total_contacts = $row['total_contacts'];
+// }
+// // $sql = "SELECT COUNT(*) as total_reports FROM reports";
+// // $result = $mysqli->query($sql);
 
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $total_reports = $row['total_reports'];
-}
+// if ($result && $result->num_rows > 0) {
+//     $row = $result->fetch_assoc();
+//     $total_reports = $row['total_reports'];
+// }
 
 $mysqli->close();
 ?>
@@ -172,10 +172,9 @@ function reloadPage() {
                         <i class="fa fa-chevron-down dropdown-icon"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="admin_appointments.php"data-page="" >Appointments</a></li>
+                        <li><a href="admin_view_appointments.php"data-page="" >Appointments</a></li>
 
-                        <li><a href="set_weekly_availability.php"data-page="" >Manage Doctor Schedule</a></li>
-                        <li><a href="view_doctor_availability.php"data-page="" >view Doctor availibilty</a></li>
+                 
                        
                         
                     </ul>
@@ -263,7 +262,8 @@ function reloadPage() {
                     <div class="box box1">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
                         <span class="text">Manage Users</span>
-                        <span class="number"><?php echo number_format($total_users); ?></span>
+             
+
                     </div>
                     <div class="box box2">
                         <i class="fa-solid fa-user-doctor"></i>

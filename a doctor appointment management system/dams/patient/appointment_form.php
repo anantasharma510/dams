@@ -1,182 +1,184 @@
 <?php
-// Include database connection
-include('../includes/db.php');
-
 // Start the session
 session_start();
 
+// Include the database connection
+include_once('../includes/db.php');
+
 // Check if the patient is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+if (!isset($_SESSION['patient_logged_in']) || $_SESSION['patient_logged_in'] !== true) {
+    header("location: patient_login.php"); // Redirect to the login page if not logged in
     exit();
 }
+
+// Get the patient ID from the session
+$patient_id = $_SESSION['patient_id'];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Appointment</title>
-    <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Reset and General Styling *//* Reset and General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+    }
+
+    input, select, button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}
+
+        </style>
 </head>
-
 <body>
-
     <h1>Book Appointment</h1>
-    <form id="appointmentForm">
+    <form id="appointment-form" method="POST" action="book_appointment.php">
+        <!-- Specialization Dropdown -->
         <label for="specialization">Select Specialization:</label>
         <select id="specialization" name="specialization" required>
-            <option value="">Select Specialization</option>
+            <option value="">--Select Specialization--</option>
             <?php
-            $result = $mysqli->query("SELECT * FROM doctorspecilization");
+            // Fetch specializations from the database
+            $query = "SELECT * FROM doctorspecilization";
+            $result = $mysqli->query($query);
             while ($row = $result->fetch_assoc()) {
-                echo "<option value='" . $row['id'] . "'>" . htmlspecialchars($row['specilization']) . "</option>";
+                echo "<option value='" . $row['id'] . "'>" . $row['specilization'] . "</option>";
             }
             ?>
         </select>
 
+        <!-- Doctor Dropdown -->
         <label for="doctor">Select Doctor:</label>
         <select id="doctor" name="doctor" required>
-            <option value="">Select Doctor</option>
+            <option value="">--Select Doctor--</option>
         </select>
 
+        <!-- Doctor Fee -->
         <label for="fee">Doctor Fee:</label>
         <input type="text" id="fee" name="fee" readonly>
 
-        <label for="available_day">Available Day:</label>
-        <select id="available_day" name="available_day" required>
-            <option value="">Select Available Day</option>
-        </select>
+        <!-- Appointment Date -->
+        <label for="appointment_date">Select Appointment Date:</label>
+        <input type="date" id="appointment_date" name="appointment_date" required>
 
-        <label for="appointment_time">Preferred Time:</label>
-        <select id="appointment_time" name="appointment_time" required>
-            <option value="">Select Time</option>
-        </select>
+        <!-- Appointment Time -->
+        <label for="appointment_time">Select Appointment Time:</label>
+        <input type="time" id="appointment_time" name="appointment_time" required>
 
-        <button type="button" id="book_appointment_button">Book Appointment</button>
+        <button type="submit">Book Appointment</button>
     </form>
 
     <script>
-        $(document).ready(function () {
-            // Load doctors based on specialization
-            $('#specialization').change(function () {
-                const specializationId = $(this).val();
-                $('#doctor').empty().append('<option value="">Select Doctor</option>');
-                $('#fee').val('');
-                $('#available_day').empty().append('<option value="">Select Available Day</option>');
-                $('#appointment_time').empty().append('<option value="">Select Time</option>');
+        // Fetch Doctors Based on Specialization
+        $('#specialization').on('change', function () {
+            const specializationId = $(this).val();
+            $('#doctor').html('<option value="">Loading...</option>');
 
-                if (specializationId) {
-                    $.ajax({
-                        url: 'fetch_doctors.php',
-                        type: 'GET',
-                        data: { specialization_id: specializationId },
-                        success: function (data) {
-                            const doctors = JSON.parse(data);
-                            doctors.forEach(doctor => {
-                                $('#doctor').append(`<option value="${doctor.id}" data-fee="${doctor.docFees}">${doctor.doctorName}</option>`);
-                            });
-                        }
-                    });
-                }
-            });
-
-            // Load available days and set fee based on the selected doctor
-            $('#doctor').change(function () {
-                const doctorId = $(this).val();
-                const fee = $('#doctor option:selected').data('fee');
-                $('#fee').val(fee);
-                $('#available_day').empty().append('<option value="">Select Available Day</option>');
-                $('#appointment_time').empty().append('<option value="">Select Time</option>');
-
-                if (doctorId) {
-                    $.ajax({
-                        url: 'fetch_availability.php',
-                        type: 'GET',
-                        data: { doctor_id: doctorId },
-                        success: function (data) {
-                            const availableDays = JSON.parse(data);
-                            availableDays.forEach(day => {
-                                $('#available_day').append(`<option value="${day.day}">${day.day}</option>`);
-                            });
-                        }
-                    });
-                }
-            });
-
-            // Load available time slots based on the selected day and doctor
-            $(document).ready(function() {
-    // When the available day is selected
-    $('#available_day').change(function() {
-        const doctorId = $('#doctor').val();
-        const day = $(this).val(); // Day in YYYY-MM-DD format
-
-        if (doctorId && day) {
             $.ajax({
-                url: 'check_timeavailability.php',
+                url: 'get_doctors.php',
                 type: 'GET',
-                data: { doctor_id: doctorId, day: day },
-                success: function(data) {
-                    const bookedTimes = JSON.parse(data); // Parse the JSON response
-                    $('#appointment_time').empty().append('<option value="">Select Time</option>');
-
-                    // All possible time slots (you can adjust the time slots as needed)
-                    const allTimes = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
-
-                    // Loop through all possible times and check if the time is available
-                    allTimes.forEach(function(time) {
-                        if (!bookedTimes.includes(time)) {
-                            $('#appointment_time').append(`<option value="${time}">${time}</option>`);
-                        }
-                    });
-                },
-                error: function() {
-                    alert('Error fetching available times.');
+                data: { specialization_id: specializationId },
+                success: function (response) {
+                    $('#doctor').html(response);
                 }
             });
-        }
-    });
-});
+        });
 
+        // Fetch Doctor Fee Based on Selected Doctor
+        $('#doctor').on('change', function () {
+            const doctorId = $(this).val();
 
-
-            // Handle form submission via AJAX
-            $('#book_appointment_button').click(function () {
-                var specialization = $('#specialization').val();
-                var doctor = $('#doctor').val();
-                var appointment_time = $('#appointment_time').val();
-                var available_day = $('#available_day').val(); // Ensure this is in YYYY-MM-DD format
-
-                // Validate the form before submitting
-                if (!specialization || !doctor || !appointment_time || !available_day) {
-                    alert("Please fill in all fields.");
-                    return; // Prevent form submission if any field is missing
+            $.ajax({
+                url: 'get_doctor_fee.php',
+                type: 'GET',
+                data: { doctor_id: doctorId },
+                success: function (response) {
+                    $('#fee').val(response);
                 }
-
-                $.ajax({
-                    url: 'book_appointment.php',
-                    type: 'POST',
-                    data: {
-                        specialization: specialization,
-                        doctor: doctor,
-                        appointment_time: appointment_time,
-                        available_day: available_day
-                    },
-                    success: function (response) {
-                        var data = JSON.parse(response);
-                        if (data.status == 'success') {
-                            alert(data.message); // Notify user of successful booking
-                        } else {
-                            alert(data.message); // Notify user of failure
-                        }
-                    }
-                });
             });
         });
     </script>
-
 </body>
-
 </html>

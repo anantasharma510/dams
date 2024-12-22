@@ -106,22 +106,17 @@ nav.close .logo_name{
 }
 nav .menu-items{
     margin-top: 5px;
-    height: calc(100% - 90px);
+    height: calc(100% -70px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 .menu-items li{
     list-style: none;
+    
 }
-.menu-items li a{
-    display: flex;
-    align-items: center;
-    height: 42px;
-    text-decoration: none;
-    position: relative;
-    padding: 8px 12px;
-}
+
+
 .nav-links li a:hover:before{
     content: "";
     position: absolute;
@@ -134,31 +129,44 @@ nav .menu-items{
 body.dark li a:hover:before{
     background-color: var(--text-color);
 }
-.menu-items li a i{
-    font-size: 20px;
-    min-width: 45px;
-    height: 70%;
+.menu-items li a {
+    display: flex;
+    align-items: center;
+    height: 32; /* Increased height */
+    text-decoration: none;
+    position: relative;
+    padding: 8px 12px; /* Increased padding */
+}
+
+.menu-items li a i {
+    font-size: 17px; /* Increased icon size */
+    min-width: 30px; /* Increased min-width */
+    height: 75%; /* Slightly adjusted height */
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--black-light-color);
 }
-.menu-items li a .link-name{
-    font-size: 16px;
+
+.menu-items li a .link-name {
+    font-size: 16px; /* Increased font size */
     font-weight: 400;
-    color: var(--black-light-color);    
+    color: var(--black-light-color);
     transition: var(--tran-05);
 }
-nav.close li a .link-name{
+
+nav.close li a .link-name {
     opacity: 0;
     pointer-events: none;
 }
+
 .nav-links li a:hover i,
-.nav-links li a:hover .link-name{
+.nav-links li a:hover .link-name {
     color: var(--primary-color);
 }
+
 body.dark .nav-links li a:hover i,
-body.dark .nav-links li a:hover .link-name{
+body.dark .nav-links li a:hover .link-name {
     color: var(--text-color);
 }
 .menu-items .logout-mode{
@@ -173,7 +181,7 @@ body.dark .nav-links li a:hover .link-name{
 .menu-items .mode-toggle{
     position: absolute;
     right: 14px;
-    height: 50px;
+    height: 40px;
     min-width: 45px;
     display: flex;
     align-items: center;
@@ -275,8 +283,10 @@ nav.close ~ .dashboard .top{
 .dashboard .dash-content{
    
     margin-top: 0; /* Remove or reduce margin-top */
-padding-top: 0;
+padding-top: 0; /* Remove or reduce padding-top */
+transition: all 0.3s ease;
 }
+
 .dash-content .title{
     display: flex;
     align-items: center;
@@ -315,6 +325,7 @@ padding-top: 0;
     padding: 15px 20px;
     background-color: var(--box1-color);
     transition: var(--tran-05);
+    margin-bottom: 20px;
 }
 .boxes .box i{
     font-size: 35px;
@@ -337,6 +348,7 @@ padding-top: 0;
 .boxes .box.box3{
     background-color: var(--box3-color);
 }
+
 .dash-content .activity .activity-data{
     display: flex;
     justify-content: space-between;

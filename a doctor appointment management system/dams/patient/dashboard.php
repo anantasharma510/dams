@@ -1,15 +1,28 @@
 <?php
 session_start();
-include_once('../includes/db.php');
-// Check if the admin is logged in
 
-
-// Check if the user is logged in, if not redirect to login page
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("location: index.html"); // Redirect to the login page
-    exit();
+// Check if the user is logged in
+if (!isset($_SESSION['patient_logged_in']) || $_SESSION['patient_logged_in'] !== true) {
+    // Redirect to login page if not logged in
+    header("Location: login.php");
+    exit;
 }
 
+// Fetch user-specific data from the session
+$patient_id = $_SESSION['patient_id'];
+$patient_email = $_SESSION['patient_email'];
+
+// You can also query the database for more information about the logged-in patient, like their name
+include('../includes/db.php'); // Make sure to include your DB connection
+
+$query = "SELECT fullname FROM patients WHERE id = ?";
+if ($stmt = $mysqli->prepare($query)) {
+    $stmt->bind_param('i', $patient_id); // 'i' for integer (patient_id)
+    $stmt->execute();
+    $stmt->bind_result($fullname);
+    $stmt->fetch();
+    $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +105,7 @@ function reloadPage() {
                     </a>
                     <ul class="submenu">
                         <li><a href="appointment_form.php" data-page="">Book Appointmnnt</a></li>
-                        <li><a href="My_appointments.php" data-page="">My appointments</a></li>
+                        <li><a href="patient_appointment_history.php" data-page="">My appointments</a></li>
                     </ul>
                     
                 </li>
